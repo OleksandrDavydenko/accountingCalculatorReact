@@ -1,25 +1,19 @@
 import React from 'react'
+import cn from 'classnames'
 import classes from './menu.module.scss'
 import { useState } from 'react'
 
 export const Menu = () => {
     const [toggle, setToggle] = useState(true)
-    const cls = [
-        classes.menu_container,
-    ]
-    const close = {
-        width: "100px"
-    }
-    let styleWidth = {
-        width: "350px"
-    }
+
+    let active_cls = classes.menu_container
 
     if (!toggle) {
-        styleWidth = close
+        active_cls = cn(active_cls, classes.close)
     }
 
     return(
-    <div className={cls} style={styleWidth}>
+    <div className={active_cls} >
         <div 
             className={classes.hamburger} 
             onClick={()=>{setToggle(!toggle)
