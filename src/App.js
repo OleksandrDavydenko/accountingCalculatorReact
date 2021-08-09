@@ -1,20 +1,22 @@
-import logo from './logo.png';
+import { BrowserRouter, Route } from 'react-router-dom';
 import classes from'./App.module.scss';
-import SalaryComponent from './components/salary_calculator/SalaryComponent';
+import  { Salary } from './components/salary_calculator/Salary';
+import { ValueAddedTax } from './components/vat_calculator/ValueAddedTax';
+import { Header } from './components/header/Header'
+import { Menu } from './components/menu/Menu'
 
 function App() {
   return (
-    <div className={classes.App}>
-      <header className={classes['App-header']}>
-        <img 
-          src={logo} 
-          className={classes["App-logo"]} 
-          alt="logo" 
-        />
-        <p>Accounting Calculator</p>
-      </header>
-      <SalaryComponent />
-    </div>
+     <BrowserRouter>
+      <div className={classes.App}>
+        <Header/>
+        <section>
+          <Menu />
+          <Route exact path='/' component={Salary}/>
+          <Route exact path='/VAT' component={ValueAddedTax}/>
+        </section>
+      </div>
+    </BrowserRouter>
   );
 }
 
