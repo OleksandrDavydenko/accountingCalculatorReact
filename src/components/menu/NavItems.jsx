@@ -1,17 +1,10 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
-import cn from 'classnames';
 import classes from './navItems.module.scss';
 
-export const NavItems = ({toggleState}) => {
-    
-    let cls = classes.nav_container
-    if(!toggleState) {
-        cls = cn(cls, classes.close)
-    }
-    
+export const NavItems = () => {
     return(
-        <ul className={cls}>
+        <ul className={classes.nav_container}>
             <li className={classes.nav_element}>
                 <NavLink 
                     className={classes.nav_item} 

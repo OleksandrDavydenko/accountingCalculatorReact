@@ -13,11 +13,9 @@ export const Menu = () => {
     }
 
     let active_cls = classes.menu_container
-    let titlecls= classes.title
 
     if (!toggle) {
         active_cls = cn(active_cls, classes.close)
-        titlecls = cn(titlecls, classes.close)
     }
 
     return(
@@ -26,7 +24,7 @@ export const Menu = () => {
             className={classes.btn_conteiner}
             onClick={toggleHeandler}
         >
-            <p className={titlecls}>UAbuh MENU</p>
+            <p className={classes.title}>UAbuh MENU</p>
             <MenuButton 
                 toggleHeandler={toggleHeandler} 
                 toggleState={toggle}
