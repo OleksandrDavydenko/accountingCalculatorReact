@@ -1,11 +1,12 @@
 import React from 'react'
 import classes from './menuButton.module.scss'
 
-export const MenuButton = ({toggle}) => {
+export const MenuButton = ({toggleHeandler, toggleState}) => {
+
     return(
         <div
-            onClick={toggle}
-            className={classes.hamburger} 
+            onClick={toggleHeandler}
+            className={classes.hamburger}
         >
             <span className={classes.stick} ></span>
             <span className={classes.stick}></span>
