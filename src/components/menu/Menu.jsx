@@ -24,7 +24,7 @@ export const Menu = () => {
             className={classes.btn_conteiner}
             onClick={toggleHeandler}
         >
-            <p className={classes.title}>UAbuh MENU</p>
+            <p className={classes.title}>MENU</p>
             <MenuButton 
                 toggleHeandler={toggleHeandler} 
                 toggleState={toggle}

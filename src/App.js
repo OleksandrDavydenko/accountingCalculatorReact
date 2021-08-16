@@ -12,8 +12,10 @@ function App() {
         <Header/>
         <section>
           <Menu />
-          <Route exact path='/' component={Salary}/>
-          <Route exact path='/VAT' component={ValueAddedTax}/>
+          <main>
+            <Route exact path='/' component={Salary}/>
+            <Route exact path='/VAT' component={ValueAddedTax}/>
+          </main>
         </section>
       </div>
     </BrowserRouter>
