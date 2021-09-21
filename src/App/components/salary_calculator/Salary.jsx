@@ -10,7 +10,7 @@ import calculateValue from './calculateValue';
 
     const dirtySalaryRef = useRef(dirtySalary);
     const pureSalaryRef = useRef(pureSalary);
-
+    //sss
     function handleChangeDirty (event) {
         setDirtySalary(event.target.value)
         dirtySalaryRef.current = event.target.value
