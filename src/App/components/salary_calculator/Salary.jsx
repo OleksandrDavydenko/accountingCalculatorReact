@@ -1,6 +1,7 @@
 import React from 'react';
 import classes from './salary.module.scss';
 import { useState, useRef } from 'react';
+import checkValue from '../../utils/checkValue';
 import calculateValue from './calculateValue';
 
  export const Salary = () => {
@@ -10,16 +11,22 @@ import calculateValue from './calculateValue';
 
     const dirtySalaryRef = useRef(dirtySalary);
     const pureSalaryRef = useRef(pureSalary);
-    //sss
-    function handleChangeDirty (event) {
-        setDirtySalary(event.target.value)
-        dirtySalaryRef.current = event.target.value
+    
+     function handleChangeDirty(event) {
+         
+         const checkedValue = checkValue(event.target.value) // принимаем значение, обрабатываем перед тем как записать в стэйт
+         
+        setDirtySalary(checkedValue)
+        dirtySalaryRef.current = checkedValue
         setPureSalary(calculateValue(dirtySalaryRef.current, pureSalaryRef.current)[0]) 
     }
 
-    function handleChangePure (event) {
-        setPureSalary(event.target.value)
-        pureSalaryRef.current = event.target.value
+     function handleChangePure(event) {
+
+         const checkedValue = checkValue(event.target.value) // принимаем значение, обрабатываем перед тем как записать в стэйт
+ 
+        setPureSalary(checkedValue)
+        pureSalaryRef.current = checkedValue
         setDirtySalary(calculateValue(dirtySalaryRef.current, pureSalaryRef.current)[1])
     }
 
