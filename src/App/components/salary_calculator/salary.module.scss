@@ -4,14 +4,13 @@
   align-items: center;
   justify-content: center;
   min-height: 300px;
-  min-width: 300px;
+  width: 320px;
   border: 1px solid;
   border-radius: 10px;
   border-color: darkgray;
   position: relative;
   box-shadow: 1px 1px 2px 1px grey;
   padding: 5px 50px 21px 50px;
-  background-color: #f2f2f2;
 }
 h1 {
   font-size: 2rem;
@@ -20,12 +19,23 @@ h1 {
   color: #282c34;
 }
 .input_view {
-  margin: 25px;
+  margin: 15px;
   height: 50px;
   border-bottom: 1px solid #282c34;
   width: 100%;
   font-size: 30px;
   outline: none;
-  background-color: #f2f2f2;
   color: #282c34;
+  box-shadow: 1px 1px 2px 1px grey;
+  border-radius: 5px;
+}
+.title_box {
+  width: 100%;
+  display: flex;
+  justify-content: left;
+  margin-bottom: -15px;
+}
+.title {
+  font-size: 2rem;
+  font-weight: 450;
 }

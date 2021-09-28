@@ -35,7 +35,7 @@ export default function checkValue(targetValue) {
     }
   }
 
-  const newValue = newArr.join("");
+  const newValue = newArr.join(""); // превращаем массив в строку
 
   return newValue;
 }

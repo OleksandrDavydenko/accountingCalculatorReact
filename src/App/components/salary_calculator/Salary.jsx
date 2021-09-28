@@ -1,50 +1,80 @@
 import React from 'react';
 import classes from './salary.module.scss';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import checkValue from '../../utils/checkValue';
 import calculateValue from './calculateValue';
 
  export const Salary = () => {
-
-    let [dirtySalary, setDirtySalary] = useState('');
-    let [pureSalary, setPureSalary] = useState('');
-
-    const dirtySalaryRef = useRef(dirtySalary);
-    const pureSalaryRef = useRef(pureSalary);
-    
+  
+     let [config, setPConfig] = useState({newDirtySalary: '', newPureSalary: '', newPdfo: '', newMilitaryTax: ''});
+  
      function handleChangeDirty(event) {
-         
-         const checkedValue = checkValue(event.target.value) // принимаем значение, обрабатываем перед тем как записать в стэйт
-         
-        setDirtySalary(checkedValue)
-        dirtySalaryRef.current = checkedValue
-        setPureSalary(calculateValue(dirtySalaryRef.current, pureSalaryRef.current)[0]) 
+        const checkedValue = checkValue(event.target.value)
+        setPConfig(calculateValue({ dirtySalary: checkedValue }))
+        console.log(calculateValue({ dirtySalary: checkedValue }));
     }
 
      function handleChangePure(event) {
+        const checkedValue = checkValue(event.target.value)
+        setPConfig(calculateValue({pureSalary: checkedValue}))
+     }
+     
+     function handleChangePdfo(event) {
+        const checkedValue = checkValue(event.target.value)
+        setPConfig(calculateValue({ pdfo: checkedValue }))
+        console.log(calculateValue({ pdfo: checkedValue }));
+     }
 
-         const checkedValue = checkValue(event.target.value) // принимаем значение, обрабатываем перед тем как записать в стэйт
- 
-        setPureSalary(checkedValue)
-        pureSalaryRef.current = checkedValue
-        setDirtySalary(calculateValue(dirtySalaryRef.current, pureSalaryRef.current)[1])
-    }
+     function handleMilitaryTax(event) {
+        const checkedValue = checkValue(event.target.value)
+        setPConfig(calculateValue({ militaryTax: checkedValue }))
+        console.log(calculateValue({ militaryTax: checkedValue }));
+     }
+
 
     return (
         <div >
             <h1>Р РѕР·СЂР°С…СѓРЅРѕРє Р·Р°СЂРѕР±С–С‚РЅРѕС— РїР»Р°С‚Рё</h1>
-             <div className={classes.form_container}>
+            <div className={classes.form_container}>
+                <div className={classes.title_box}>
+                    <h6 className={classes.title}>РћРєР»Р°Рґ:</h6>
+                </div>
                 <input
+                    placeholder="0.00"
                     type="text" 
                     className={classes.input_view}
-                    value={dirtySalary}
+                    value={config.newDirtySalary}
                     onChange={handleChangeDirty} 
                 />
+                <div className={classes.title_box}>
+                    <h6 className={classes.title}>РќР° СЂСѓРєРё:</h6>
+                </div>          
                 <input 
-                    type="text" 
+                    type="text"
+                    placeholder="0.00"
                     className={classes.input_view}
-                    value={pureSalary}
+                    value={config.newPureSalary}
                     onChange={handleChangePure} 
+                />
+                <div className={classes.title_box}>
+                    <h6 className={classes.title}>РџРѕРґР°С‚РѕРє Р· РґРѕС…РѕРґСѓ С„С–Р·РёС‡РЅРёС… РѕСЃС–Р±:</h6>
+                </div>          
+                <input 
+                    type="text"
+                    placeholder="0.00"
+                    className={classes.input_view}
+                    value={config.newPdfo}
+                    onChange={handleChangePdfo} 
+                />
+                <div className={classes.title_box}>
+                    <h6 className={classes.title}>Р’С–Р№СЃСЊРєРѕРІРёР№ Р·Р±С–СЂ:</h6>
+                </div>          
+                <input 
+                    type="text"
+                    placeholder="0.00"
+                    className={classes.input_view}
+                    value={config.newMilitaryTax}
+                    onChange={handleMilitaryTax} 
                 />
              </div>
         </div>
