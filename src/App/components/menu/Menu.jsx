@@ -25,10 +25,13 @@ export const Menu = () => {
             onClick={toggleHeandler}
         >
             <p className={classes.title}>MENU</p>
-            <MenuButton 
+            <div className={classes.menu_button_position}>
+                <MenuButton 
                 toggleHeandler={toggleHeandler} 
                 toggleState={toggle}
-            />
+                />
+                    
+            </div>
         </div>
         <NavItems toggleState={toggle} />
     </div>
