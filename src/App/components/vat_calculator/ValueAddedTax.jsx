@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classes from './valueAddedTax.module.scss';
+import {VATPercents} from './vatConfig'
 
 import { Dropdown } from '../../UI/Dropdown/Dropdown';
 
 
 export const ValueAddedTax = () => {
+
+    const [activePercent, setActivePercent] = useState(20);
+    
+    const changedData = (percent) => {
+        setActivePercent(percent)
+    }
+    
+    console.log(activePercent);
+
+    
 
 return (
     <div >
@@ -13,7 +24,11 @@ return (
             <div className={classes.title_box}>
                 <h6 className={classes.title}>%ПДВ:</h6>
             </div>
-            <Dropdown />
+            <Dropdown
+                changeData={changedData}
+                VATPercents={VATPercents}
+                value={activePercent}
+            />
             <div className={classes.title_box}>
                 <h6 className={classes.title}>Сума, без ПДВ:</h6>
             </div>          
