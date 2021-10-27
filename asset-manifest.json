@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/accountingCalculatorReact/static/css/main.4e914535.chunk.css",
+    "main.js": "/accountingCalculatorReact/static/js/main.87c4eb8c.chunk.js",
+    "main.js.map": "/accountingCalculatorReact/static/js/main.87c4eb8c.chunk.js.map",
+    "runtime-main.js": "/accountingCalculatorReact/static/js/runtime-main.b6fd4060.js",
+    "runtime-main.js.map": "/accountingCalculatorReact/static/js/runtime-main.b6fd4060.js.map",
+    "static/js/2.63511e4f.chunk.js": "/accountingCalculatorReact/static/js/2.63511e4f.chunk.js",
+    "static/js/2.63511e4f.chunk.js.map": "/accountingCalculatorReact/static/js/2.63511e4f.chunk.js.map",
+    "static/js/3.ebaf89f6.chunk.js": "/accountingCalculatorReact/static/js/3.ebaf89f6.chunk.js",
+    "static/js/3.ebaf89f6.chunk.js.map": "/accountingCalculatorReact/static/js/3.ebaf89f6.chunk.js.map",
+    "index.html": "/accountingCalculatorReact/index.html",
+    "static/css/main.4e914535.chunk.css.map": "/accountingCalculatorReact/static/css/main.4e914535.chunk.css.map",
+    "static/js/2.63511e4f.chunk.js.LICENSE.txt": "/accountingCalculatorReact/static/js/2.63511e4f.chunk.js.LICENSE.txt",
+    "static/media/logo.c1195e8d.png": "/accountingCalculatorReact/static/media/logo.c1195e8d.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b6fd4060.js",
+    "static/js/2.63511e4f.chunk.js",
+    "static/css/main.4e914535.chunk.css",
+    "static/js/main.87c4eb8c.chunk.js"
+  ]
+}
