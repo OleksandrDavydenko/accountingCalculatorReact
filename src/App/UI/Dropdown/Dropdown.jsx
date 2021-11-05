@@ -13,7 +13,8 @@ export const Dropdown = ({ changeData, VATPercents, value }) => {
     }
 
      const listItems = VATPercents.map((percent) =>
-        <li
+        <li 
+            key={percent}
             className={classes.item}
             onClick={() => changeData(percent)}
         >

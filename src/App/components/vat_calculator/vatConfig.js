@@ -1,1 +1,1 @@
-export const VATPercents = [20, 7, 14, 0];
+export const VATPercents = [20, 7, 14];

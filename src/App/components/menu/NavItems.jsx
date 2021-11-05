@@ -21,6 +21,14 @@ export const NavItems = () => {
                 >Розрахувати ПДВ
                 </NavLink>
             </li>
+             <li className={classes.nav_element}>
+                <NavLink 
+                    className={classes.nav_item} 
+                    exact={true} 
+                    to="/rent"
+                >Розрахунок оренди МСФО
+                </NavLink>
+            </li>
         </ul>
     )
 } 

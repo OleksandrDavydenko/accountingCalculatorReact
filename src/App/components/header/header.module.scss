@@ -46,10 +46,26 @@ li:hover {
 }
 .container {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 .nav_item {
   color: white;
   text-decoration: none;
+}
+.logo_conteiner {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.login_button {
+  border: solid 2px white;
+  border-radius: 5px;
+  background-color: #282c34;
+  margin-right: 40px;
+  height: 30px;
+  color: white;
+  cursor: pointer;
 }

@@ -16,8 +16,6 @@ export const ValueAddedTax = () => {
         setActivePercent(percent)
     }
 
-    console.log(activePercent);
-
     let [config, setPConfig] = useState({ withoutVAT: "", VAT: "", withVAT: "", activePercent: activePercent });
     
     function handleWithoutVAT(event) {

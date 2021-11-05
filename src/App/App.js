@@ -1,9 +1,8 @@
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import classes from'./App.module.scss';
-import  { Salary } from './components/salary_calculator/Salary';
-import { ValueAddedTax } from './components/vat_calculator/ValueAddedTax';
 import { Header } from './components/header/Header'
 import { Menu } from './components/menu/Menu'
+import { AppRouter } from './components/AppRouter';
 
 function App() {
   return (
@@ -13,8 +12,7 @@ function App() {
         <section>
           <Menu />
           <main>
-            <Route exact path='/' component={Salary}/>
-            <Route exact path='/VAT' component={ValueAddedTax}/>
+            <AppRouter/>
           </main>
         </section>
       </div>
