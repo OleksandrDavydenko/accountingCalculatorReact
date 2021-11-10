@@ -1,8 +1,6 @@
 import React, { useContext } from 'react'
 import logo from './logo.png';
 import classes from './header.module.scss'
-import { NavLink } from 'react-router-dom';
-import { LOGIN_ROUTE } from '../../utils/constRoutes';
 import { Context } from "../../../index";
 import { useAuthState } from 'react-firebase-hooks/auth'
 import firebase from 'firebase/compat/app'

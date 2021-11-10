@@ -26,7 +26,7 @@ export const NavItems = () => {
                     className={classes.nav_item} 
                     exact={true} 
                     to="/rent"
-                >Розрахунок оренди МСФО
+                >Розрахунок оренди МСФЗ
                 </NavLink>
             </li>
         </ul>
