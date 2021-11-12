@@ -12,8 +12,8 @@ import { Loader } from './components/loader/Loader';
 function App() {
 
     const {auth} = useContext(Context)
+    // eslint-disable-next-line
     const [user, loading, error] = useAuthState(auth)
-
     
 
 

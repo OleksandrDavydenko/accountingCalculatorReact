@@ -1,41 +1,36 @@
-import React, {useRef, useState, useContext} from 'react';
-import ReactTable from "react-table-6";  
+import React, {useRef, useState, useContext, useEffect} from 'react';
+import ReactTable from "react-table-6";
 import "react-table-6/react-table.css" ;
 import classes from './rentCalculator.module.scss';
-/* import {data} from './data' */
 import {columns} from './columns';
 import { Context } from "../../../index";
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import { Loader } from '../loader/Loader';
-import firebase from '@firebase/app-compat';
-
 
 
 export const RentCalculator = () => {
-    const [data, setData] = useState()
+    const [data, setData] = useState([])
     const korespondentName = useRef(null)
     const agreementNumber = useRef(null)
-    const aremeentDate =useRef(null)
-    const monthPayment =useRef(null)
-
-
+    const aremeentDate = useRef(null)
+    const monthPayment = useRef(null)
 
     const {auth, firestore} = useContext(Context)
     const [user] = useAuthState(auth)
 
     const [dbData, loading] = useCollectionData(
-        firestore.collection('agreements').orderBy('createdAt')
+        firestore.collection('users').doc(user.uid).collection("agreements")
     )
+    useEffect(() => {
+        setData(dbData)
+    }, [dbData]);
 
-    const sendData = async () => {
-        firestore.collection('agreements').add({
-            uid: user.uid,
-            displayName: user.displayName,
-            photoURL: user.photoURL,
-            agreement: {test:'test'},
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        })
+    const sendData = async (obj) => {
+        //добавляем новый обьект "Договор"
+        await firestore.collection('users').doc(user.uid).collection("agreements").add(
+            obj
+        )
     }
 
     if (loading) {
@@ -51,23 +46,18 @@ export const RentCalculator = () => {
         monthPayment: ''
     }
 
-    let incomeArray = []
-    function onButtonClick() {
+    const onButtonClick = ()=> {
         incomeData.korespondentName = korespondentName.current.value
         incomeData.agreementNumber = agreementNumber.current.value
         incomeData.aremeentDate = aremeentDate.current.value
         incomeData.monthPayment = monthPayment.current.value
 
-        incomeArray = [...incomeArray, incomeData]
-
-        const dataNew = incomeArray
-        console.log(dataNew);
-
-       
-        setData(incomeArray);
-        sendData()
-
+        sendData(incomeData)
     }
+
+
+
+
 
 
 
