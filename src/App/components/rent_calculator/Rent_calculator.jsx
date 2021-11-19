@@ -1,22 +1,28 @@
-import React, {useRef, useState, useContext, useEffect} from 'react';
-import ReactTable from "react-table-6";
-import "react-table-6/react-table.css" ;
+import React, { useState, useContext, useEffect} from 'react';
 import classes from './rentCalculator.module.scss';
-import {columns} from './columns';
 import { Context } from "../../../index";
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import { Loader } from '../loader/Loader';
+import {RentTableV6} from './rent_table/RentTableV6'
+import firebase from 'firebase/compat/app'
+import { doc, setDoc } from "firebase/firestore"; 
 
 
 export const RentCalculator = () => {
     const [data, setData] = useState([])
-    const korespondentName = useRef(null)
-    const agreementNumber = useRef(null)
-    const aremeentDate = useRef(null)
-    const monthPayment = useRef(null)
-
     const {auth, firestore} = useContext(Context)
+
+        const initialFieldValues = {
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        korespondentName: '',
+        agreementNumber: '',
+        aremeentDate: '',
+        monthPayment: '',
+    }
+    let [incomeData, setIncomeData] = useState(initialFieldValues)
+
+    
     const [user] = useAuthState(auth)
 
     const [dbData, loading] = useCollectionData(
@@ -28,9 +34,11 @@ export const RentCalculator = () => {
 
     const sendData = async (obj) => {
         //добавляем новый обьект "Договор"
-        await firestore.collection('users').doc(user.uid).collection("agreements").add(
+/*         await firestore.collection('users').doc(user.uid).collection("agreements", obj.timestamp).add(
             obj
-        )
+        )  */
+        const timestamp =  String(Date.now())
+        await setDoc(doc(firestore.collection('users').doc(user.uid).collection('agreements'), timestamp), obj);
     }
 
     if (loading) {
@@ -38,56 +46,57 @@ export const RentCalculator = () => {
     }
 
 
-
-    const incomeData = {
-        korespondentName: '',
-        agreementNumber: '',
-        aremeentDate: '',
-        monthPayment: ''
+    const handleInputChange = e => {
+        let {name, value} = e.target
+        setIncomeData({
+            ...incomeData,
+            [name]: value
+        })
     }
-
-    const onButtonClick = ()=> {
-        incomeData.korespondentName = korespondentName.current.value
-        incomeData.agreementNumber = agreementNumber.current.value
-        incomeData.aremeentDate = aremeentDate.current.value
-        incomeData.monthPayment = monthPayment.current.value
-
+    const onButtonClick = (e) => {
         sendData(incomeData)
+        setIncomeData(initialFieldValues)
     }
-
-
-
-
-
-
-
 
     return (
         <div className={classes.container}>
             <div>
                 <input 
-                    ref={korespondentName}
                     type="text"
                     placeholder="Назва орендодавця"
                     className={classes.input_view}
+                    value={incomeData.korespondentName}
+                    name='korespondentName'
+                    onChange={handleInputChange}
+                    autoComplete="off"
                 />
                 <input 
-                    ref={agreementNumber}
                     type="text"
                     placeholder="№ Договору"
                     className={classes.input_view}
+                    value={incomeData.agreementNumber}
+                    name='agreementNumber'
+                    onChange={handleInputChange}
+                    autoComplete="off"
+               
                 />
                 <input 
-                    ref={aremeentDate}
                     type="date"
                     placeholder="дата договору"
                     className={classes.input_view}
+                    value={incomeData.aremeentDate}
+                    name='aremeentDate'
+                    onChange={handleInputChange}
+
                 />
                 <input 
-                    ref={monthPayment}
                     type="number"
                     placeholder="місячний платіж"
                     className={classes.input_view}
+                    value={incomeData.monthPayment}
+                    name='monthPayment'
+                    onChange={handleInputChange}
+                    autoComplete="off"
                 />
                 <button 
                     className={classes.add_button}
@@ -96,15 +105,7 @@ export const RentCalculator = () => {
                     Додати договір
                 </button>
             </div>
-            <ReactTable
-                className={classes.table}
-                columns={columns}
-                data={data}
-                defaultPageSize={5}
-                noDataText={'Договори відсутні...'}
-            >
-
-            </ReactTable>
+            <RentTableV6 data={data} />
         </div>
     )
 

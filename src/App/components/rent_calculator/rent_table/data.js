@@ -1,4 +1,4 @@
-export let data = [
+export let makeData = /* [
         {   
             ID: '0001',
             corespondentName: 'RGC',
@@ -69,4 +69,12 @@ export let data = [
             argeementDate: '15.09.2018',
             monthPrice: '15151,22'
         },
-    ]
+    ] */
+     [{
+        firstName: 'difficulty',
+        lastName: 'disgust',
+        age: 30,
+        visits: 254,
+        progress: 'M18',
+        status: true
+     }]
