@@ -5,15 +5,17 @@ import loginLogo from './login.png';
 import classes from './header.module.scss'
 import { Context } from "../../../index";
 import { useAuthState } from 'react-firebase-hooks/auth'
-import firebase from 'firebase/compat/app'
-import { doc, setDoc } from "firebase/firestore"; 
+/* import firebase from 'firebase/compat/app'
+import { doc, setDoc } from "firebase/firestore";  */
+import { NavLink } from 'react-router-dom';
+import { LOGIN_ROUTE } from '../../utils/constRoutes';
 
 export const Header = () => {
 
-    const {auth, firestore} = useContext(Context)
+    const {auth, /* firestore */} = useContext(Context)
     const [user] = useAuthState(auth)
 
-    const login = async () => {
+/*     const login = async () => {
         const provider = new firebase.auth.GoogleAuthProvider()
         const {user} = await auth.signInWithPopup(provider)
         console.log('user =>', user);
@@ -25,8 +27,7 @@ export const Header = () => {
             email: user.email,
             phoneNumber: user.phoneNumber
         });
-
-    }
+    } */
 
 
     return (
@@ -43,22 +44,27 @@ export const Header = () => {
                 <div>
                     {user ?
                         <div>
-                        <span className={classes.user_name}>{user.displayName}</span>
-                        <button 
-                            className={classes.login_button} 
-                            onClick={()=> auth.signOut()}
-                        >Вийти
-                        <img className={classes.img_log} src={logoutLogo} alt='logout_img'/>
-                        </button>
+                            <span className={classes.user_name}>
+                                {user.displayName}
+                            </span>
+                            <button 
+                                className={classes.login_button} 
+                                onClick={()=> auth.signOut()}
+                            >Вийти
+                            <img className={classes.img_log} src={logoutLogo} alt='logout_img'
+                            />
+                            </button>
                         </div>
                         :
-                        <button 
-                            onClick={login} 
-                            className={classes.login_button}
-                        >
-                            Увійти
-                        <img className={classes.img_log} src={loginLogo}alt='login_img'/>
-                        </button>
+                        <NavLink to={LOGIN_ROUTE}>
+                            <button 
+                                /* onClick={login}  */
+                                className={classes.login_button}
+                            >
+                                Увійти
+                            <img className={classes.img_log} src={loginLogo}alt='login_img'/>
+                            </button>
+                        </NavLink>
                     }
                 </div>
             </div>

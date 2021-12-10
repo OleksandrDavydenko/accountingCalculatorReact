@@ -1,114 +1,185 @@
-import React, { useState, useContext, useEffect} from 'react';
-import classes from './rentCalculator.module.scss';
+import React, { useContext, useState }  from "react";
+import classes from "./rentCalculator.module.scss";
 import { Context } from "../../../index";
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import { Loader } from '../loader/Loader';
-import {RentTableV6} from './rent_table/RentTableV6'
-import firebase from 'firebase/compat/app'
-import { doc, setDoc } from "firebase/firestore"; 
-
+import { useInput } from "../../utils/hooks/useInput";
+import { RowSelection } from './rent_table/Table'
+import { incomeData } from "./utils/incomeDataRentCalc";
+import { doc, setDoc } from "firebase/firestore";
+import { calculations } from "./utils/calculations"; 
+import { clearInp } from "./utils/clearInput";
 
 export const RentCalculator = () => {
-    const [data, setData] = useState([])
-    const {auth, firestore} = useContext(Context)
+  
+  const {auth, firestore} = useContext(Context)
 
-        const initialFieldValues = {
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        korespondentName: '',
-        agreementNumber: '',
-        aremeentDate: '',
-        monthPayment: '',
-    }
-    let [incomeData, setIncomeData] = useState(initialFieldValues)
+  const [user] = useAuthState(auth)
 
-    
-    const [user] = useAuthState(auth)
-
-    const [dbData, loading] = useCollectionData(
+  const [dbData, loading] = useCollectionData(
         firestore.collection('users').doc(user.uid).collection("agreements")
     )
-    useEffect(() => {
-        setData(dbData)
-    }, [dbData]);
+//Бумеранг, получаю стэйт (состояние чекбоксов)с другого компонента//-//-//
+  const [selectedRows, setselectedRows] = useState([]);
 
-    const sendData = async (obj) => {
-        //добавляем новый обьект "Договор"
-/*         await firestore.collection('users').doc(user.uid).collection("agreements", obj.timestamp).add(
-            obj
-        )  */
+  const changedData =  (selectedRows) => {
+        setselectedRows(selectedRows)
+    }
+
+  console.log(selectedRows);
+//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//-//
+
+// создаем инпуты
+  const korespondentName = useInput(
+    {
+      type: "text",
+      placeholder: "Назва орендодавця:",
+      name: "korespondentName"
+    },
+    "",
+    {
+      isEmpty: true,
+      minLenght: 3
+    }
+  );
+  const agreementNumber = useInput(
+    {
+      type: "text",
+      placeholder: "Номер договору:",
+      name: "agreementNumber",
+      width: '200'
+    },
+    "",
+    {
+      isEmpty: true,
+      minLenght: 3
+    }
+  );
+  const aremeentDate = useInput(
+    {
+      type: "date",
+      placeholder: "Дата початку договору:",
+      name: "aremeentDate",
+      width: '170'
+    },
+    "",
+    {
+      isEmpty: true,
+    }
+  );
+  const aremeentDateEnd = useInput(
+    {
+      type: "date",
+      placeholder: "Дата закінчення договору:",
+      name: "aremeentDateEnd",
+      width: '170'
+    },
+    "",
+    {
+      isEmpty: true,
+    }
+  );
+  const discountRate  = useInput(
+    {
+      type: "number",
+      placeholder: "Ставка дисконтування %:",
+      name: "discountRate",
+      width: '150',
+    },
+    "",
+    {
+      isEmpty: true,
+    }
+  );
+  const monthPayment = useInput(
+    {
+      type: "number",
+      placeholder: "Місячний платіж:",
+      name: "monthPayment",
+      width: '150',
+    },
+    "",
+    {
+      isEmpty: true,
+    }
+  );
+    // Добавляем инпуты в массив
+  const arrayInputs = [
+    korespondentName,
+    agreementNumber,
+    aremeentDate,
+    aremeentDateEnd,
+    discountRate,
+    monthPayment,
+  ];
+
+  //Проверяем инпуты все ли проверки прошли
+  function checkValidation(arrayInputs) {
+    return arrayInputs.every(
+      (element) => !element.isEmpty && !element.minLengthError
+    );
+  }
+  //меняем состояние кнопки
+  let activeBtn = !checkValidation(arrayInputs);
+
+  // отправляет обьект на firestore
+  const sendData = async (obj) => {
         const timestamp =  String(Date.now())
         await setDoc(doc(firestore.collection('users').doc(user.uid).collection('agreements'), timestamp), obj);
     }
-
-    if (loading) {
-        return <Loader/>
+// Если в базе данных есть записи то выполняем рассчеты
+   let tableData = {}
+    if(dbData) {
+       tableData = calculations(dbData)
     }
 
+  //отправляем данные, по нажатию на кнопку
+  function sendDataHeandler() {
+    sendData(incomeData(arrayInputs));
+    clearInp(arrayInputs)
+  }
 
-    const handleInputChange = e => {
-        let {name, value} = e.target
-        setIncomeData({
-            ...incomeData,
-            [name]: value
-        })
-    }
-    const onButtonClick = (e) => {
-        sendData(incomeData)
-        setIncomeData(initialFieldValues)
-    }
+  if (loading) {
+    return <Loader/>
+  }
 
-    return (
-        <div className={classes.container}>
-            <div>
-                <input 
-                    type="text"
-                    placeholder="Назва орендодавця"
+  return (
+    <div className={classes.container}>
+        <div className={classes.income_form}>
+            {arrayInputs.map((element) => (
+                <div className={classes.input_box}  key={element.inputAttribute.name}>
+                {element.isDirty && element.isEmpty && (
+                    <div style={{ color: "red" }}>Поле не може бути пустим</div>
+                )}
+                {element.isDirty && element.minLengthError && (
+                    <div style={{ color: "red" }}>Некоректна довжина поля</div>
+                )}
+                <p className={classes.input_title}>{element.inputAttribute.placeholder}</p>
+                <input
+                    style={{width: element.inputAttribute.width + 'px'}}
+                    type={element.inputAttribute.type}
+                    /* placeholder={element.inputAttribute.placeholder} */
                     className={classes.input_view}
-                    value={incomeData.korespondentName}
-                    name='korespondentName'
-                    onChange={handleInputChange}
+                    value={element.value}
+                    name={element.inputAttribute.name}
+                    onChange={(e) => element.onChange(e)}
+                    onBlur={(e) => element.onBlur(e)}
                     autoComplete="off"
                 />
-                <input 
-                    type="text"
-                    placeholder="№ Договору"
-                    className={classes.input_view}
-                    value={incomeData.agreementNumber}
-                    name='agreementNumber'
-                    onChange={handleInputChange}
-                    autoComplete="off"
-               
-                />
-                <input 
-                    type="date"
-                    placeholder="дата договору"
-                    className={classes.input_view}
-                    value={incomeData.aremeentDate}
-                    name='aremeentDate'
-                    onChange={handleInputChange}
-
-                />
-                <input 
-                    type="number"
-                    placeholder="місячний платіж"
-                    className={classes.input_view}
-                    value={incomeData.monthPayment}
-                    name='monthPayment'
-                    onChange={handleInputChange}
-                    autoComplete="off"
-                />
-                <button 
-                    className={classes.add_button}
-                    onClick={onButtonClick}
-                >
-                    Додати договір
-                </button>
+                </div>
+            ))}
             </div>
-            <RentTableV6 data={data} />
-        </div>
-    )
-
-}
-
-
+            <button
+                style={{marginBottom: '3%'}}
+                className={classes.add_button}
+                disabled={activeBtn}
+                onClick={() => sendDataHeandler()}
+            >
+                Додати договір
+            </button>
+        {/* <RentTableV6 data={tableData} /> */}
+        <RowSelection data={tableData} changedData={changedData}/>
+    </div>
+  );
+};

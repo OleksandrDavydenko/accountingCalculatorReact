@@ -1,33 +1,34 @@
-export const columns = [
-/*         {
-            Header: "ID",
-            accessor: 'ID',
-            width: 70
-        }, */
-        {
-            Header: "Орендодавець",
-            accessor: 'korespondentName',
-            style: {
-                fontSize: 17,
-                borderRight: '1px solid'
-            },
-            width: 200,
-        },
-        {
-            Header: "№ Договору",
-            accessor: 'agreementNumber',
-           /*  width: 150, */
-        },
-        {
-            Header: "Дата договору",
-            accessor: 'aremeentDate',
-            /* width: 120 */
-
-        },
-        {
-            Header: "Місячний платіж",
-            accessor: 'monthPayment',
-            /* width: 170 */
-        },
-        
-    ]
+export const COLUMNS = [
+    {
+        Header: "№",
+        accessor: 'number',
+    },
+    {
+        Header: "Орендодавець",
+        accessor: 'korespondentName',
+    },
+    {
+        Header: "№ Договору",
+        accessor: 'agreementNumber',
+    },
+    {
+        Header: "Дата початку дії договору",
+        accessor: 'aremeentDate',
+    },
+            {
+        Header: "Дата закінчення дії договору ",
+        accessor: 'aremeentDateEnd',
+    },
+    {
+        Header: "Ставка дисконтування",
+        accessor: 'discountRate',
+    },
+    {
+        Header: "Місячний платіж",
+        accessor: 'monthPayment',
+    },
+    {
+        Header: "Кількість місяців дії договору",
+        accessor: 'numberOfMonth',
+    },
+]

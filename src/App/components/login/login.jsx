@@ -30,7 +30,7 @@ export const Login = () => {
 
 return (
     <div style={{textAlign: 'center'}}>
-        <p style={{fontSize: 50}}>LOGIN PAGE</p>
+        <p style={{fontSize: 40}}>LOGIN PAGE</p>
         <button onClick={login}>Google Signin</button>
     </div>
 )

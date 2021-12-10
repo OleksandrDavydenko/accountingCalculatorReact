@@ -15,6 +15,14 @@ export const RentTableV6 = ({data}) => {
             width: 70
         }, */
         {
+            Header: "№",
+            accessor: 'number',
+                style: {
+                borderRight: '1px solid grey'
+            },
+             width: 10,
+        },
+        {
             Header: "Орендодавець",
             accessor: 'korespondentName',
             style: {
@@ -31,8 +39,15 @@ export const RentTableV6 = ({data}) => {
             /* width: 200, */
         },
         {
-            Header: "Дата договору",
+            Header: "Дата початку дії договору",
             accessor: 'aremeentDate',
+                style: {
+                borderRight: '1px solid grey'
+            },
+        },
+                {
+            Header: "Дата закінчення дії договору ",
+            accessor: 'aremeentDateEnd',
                 style: {
                 borderRight: '1px solid grey'
             },
@@ -44,6 +59,10 @@ export const RentTableV6 = ({data}) => {
                 borderRight: '1px solid grey'
             },
             /* width: 200, */
+        },
+        {
+            Header: "Кількість місяців",
+            accessor: 'numberOfMonth',
         },
         
     ]
